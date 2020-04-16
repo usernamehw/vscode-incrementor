@@ -1,6 +1,6 @@
 > This is a fork of https://github.com/nmsmith22389/vscode-incrementor
 
-![Demo](images/demo-main.gif)
+![Demo](https://raw.githubusercontent.com/usernamehw/vscode-incrementor/master/img/demo-main.gif)
 
 ## Contents
 * [Features](#features)
@@ -17,13 +17,13 @@
 
 ### Numbers
 
-![Numbers](images/demo-number.gif)
+![Numbers](https://raw.githubusercontent.com/usernamehw/vscode-incrementor/master/img/demo-number.gif)
 
 Numbers can be incremented or decremented by 1, 0.1, or 10. This works with integers, decimals, and negatives alike. The only *real* condition is that it is a **finite** number.
 
 ### Enumerators
 
-![Enumerators](images/demo-enumerator.gif)
+![Enumerators](https://raw.githubusercontent.com/usernamehw/vscode-incrementor/master/img/demo-enumerator.gif)
 
 Enumerators can basically be any kind of text, like a variable or function or command.
 
@@ -35,7 +35,7 @@ Each array will cycle through the containing strings from beginning to end and a
 
 ### Multiple Selections
 
-![Multiple Selections](images/demo-multiple-selections.gif)
+![Multiple Selections](https://raw.githubusercontent.com/usernamehw/vscode-incrementor/master/img/demo-multiple-selections.gif)
 
 Incrementor supports multiple selections, even in the same line. They do not all have to be the same type, so one selection/cursor could be a number and another could be an enumerator.
 

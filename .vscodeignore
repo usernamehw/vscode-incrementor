@@ -14,3 +14,8 @@ vsc-extension-quickstart.md
 
 node_modules
 webpack.config.js
+
+img/demo-enumerator.gif
+img/demo-main.gif
+img/demo-multiple-selections.gif
+img/demo-number.gif
