@@ -1,6 +1,5 @@
 import vscode, { Range, Selection, Position, TextEditor, TextEditorEdit, TextDocument } from 'vscode';
 
-import _ from 'lodash';
 import BigNumber from 'bignumber.js';
 import { IConfig } from './types';
 
@@ -104,7 +103,7 @@ export class Incrementor {
 	run(delta: number): void {
 		// BigNumber.config({ ERRORS: false });
 
-		const action = _.findKey(this.action, o => o === delta);
+		const action = Object.keys(this.action).find(x => this.action[x] === delta);
 
 		this.updateSettings();
 
@@ -244,8 +243,8 @@ export class Incrementor {
 
 			let wordChanged = tempString;
 			for (const enums of this.settings.enums) {
-				if (_.includes(enums, tempString)) {
-					const eIndex = _.indexOf(enums, tempString);
+				if (enums.includes(tempString)) {
+					const eIndex = enums.indexOf(tempString);
 
 					// Cycle enums
 					if (this.delta === this.action.incByOne) {
