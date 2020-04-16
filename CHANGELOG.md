@@ -1,7 +1,3 @@
-# Change Log
-All notable changes to the "incrementor" extension will be documented in this file.
+## 0.1.0 `16 Apr 2020`
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-- Initial release
+- Just want to make sure the fork didn't break anything

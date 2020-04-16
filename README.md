@@ -11,7 +11,6 @@
   * [Available Commands](#available-commands)
 * [Extension Settings](#extension-settings)
   * [Keybindings](#keybindings)
-* [Known Issues](#known-issues)
 
 ## Features
 
