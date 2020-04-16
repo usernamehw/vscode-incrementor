@@ -29,7 +29,7 @@
         "typeof-compare": true,
         "indent": [
             true,
-            "spaces"
+            "tabs"
         ],
         "no-trailing-whitespace": false,
         "prefer-const": true,
