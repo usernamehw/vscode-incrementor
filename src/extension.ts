@@ -3,8 +3,8 @@ import vscode, { Range, Selection, Position, TextEditor, TextEditorEdit, TextDoc
 import BigNumber from 'bignumber.js';
 import { IConfig } from './types';
 
-let config: IConfig;
 const EXTENSION_NAME = 'incrementor';
+let config = vscode.workspace.getConfiguration(EXTENSION_NAME) as any as IConfig;
 
 export function activate(context: vscode.ExtensionContext): void {
 	const inc = new Incrementor();
