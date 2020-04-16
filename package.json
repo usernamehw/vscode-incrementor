@@ -2,7 +2,7 @@
   "name": "incrementor",
   "displayName": "Incrementor",
   "description": "Advanced increment / decrement actions for just about anything!",
-  "icon": "images/icon.svg",
+  "icon": "images/icon.png",
   "version": "0.1.0",
   "publisher": "usernamehw",
   "galleryBanner": {
