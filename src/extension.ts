@@ -1,15 +1,11 @@
-'use strict';
-import * as vscode from 'vscode';
-import Range = vscode.Range;
-import Selection = vscode.Selection;
-import Position = vscode.Position;
-import TextEditor = vscode.TextEditor;
-import TextEditorEdit = vscode.TextEditorEdit;
-import TextDocument = vscode.TextDocument;
-// import TextLine = vscode.TextLine;
+import vscode, { Range, Selection, Position, TextEditor, TextEditorEdit, TextDocument } from 'vscode';
 
-import * as _ from 'lodash';
+import _ from 'lodash';
 import BigNumber from 'bignumber.js';
+import { IConfig } from './types';
+
+let config: IConfig;
+const EXTENSION_NAME = 'incrementor';
 
 export function activate(context: vscode.ExtensionContext): void {
 	const inc = new Incrementor();
@@ -38,12 +34,14 @@ export function activate(context: vscode.ExtensionContext): void {
 		inc.run(inc.action.decByTen);
 	});
 
-	context.subscriptions.push(comIncOne);
-	context.subscriptions.push(comDecOne);
-	context.subscriptions.push(comIncTenth);
-	context.subscriptions.push(comDecTenth);
-	context.subscriptions.push(comIncTen);
-	context.subscriptions.push(comDecTen);
+	const onSettingChangeDisposable = vscode.workspace.onDidChangeConfiguration(e => {
+		if (!e.affectsConfiguration(EXTENSION_NAME)) {
+			return;
+		}
+		config = vscode.workspace.getConfiguration(EXTENSION_NAME) as any as IConfig;
+	});
+
+	context.subscriptions.push(comIncOne, comDecOne, comIncTenth, comDecTenth, comIncTen, comDecTen, onSettingChangeDisposable);
 }
 
 /**

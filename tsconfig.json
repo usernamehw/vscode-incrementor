@@ -6,7 +6,8 @@
         "lib": [
             "es6"
         ],
-        "sourceMap": true,
+		"sourceMap": true,
+		"esModuleInterop": true,
         "rootDir": ".",
         "skipLibCheck": true
     },
