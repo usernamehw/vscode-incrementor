@@ -162,32 +162,6 @@
 				"title": "Decrement by 10",
 				"category": "Incrementor"
 			}
-		],
-		"keybindings": [
-			{
-				"command": "incrementor.incByOne",
-				"key": "ctrl+up"
-			},
-			{
-				"command": "incrementor.decByOne",
-				"key": "ctrl+down"
-			},
-			{
-				"command": "incrementor.incByTenth",
-				"key": "ctrl+alt+up"
-			},
-			{
-				"command": "incrementor.decByTenth",
-				"key": "ctrl+alt+down"
-			},
-			{
-				"command": "incrementor.incByTen",
-				"key": "ctrl+alt+cmd+up"
-			},
-			{
-				"command": "incrementor.decByTen",
-				"key": "ctrl+alt+cmd+down"
-			}
 		]
 	},
 	"scripts": {
