@@ -3,7 +3,7 @@
 	"displayName": "Incrementor",
 	"description": "Advanced increment / decrement actions for just about anything!",
 	"icon": "img/icon.png",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"publisher": "usernamehw",
 	"galleryBanner": {
 		"color": "#E1F5FE",
