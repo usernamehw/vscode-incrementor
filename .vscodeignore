@@ -11,3 +11,6 @@ tslint.json
 typings.json
 typings/**
 vsc-extension-quickstart.md
+
+node_modules
+webpack.config.js

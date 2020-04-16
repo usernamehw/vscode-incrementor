@@ -33,7 +33,7 @@
   "engines": {
     "vscode": "^1.40.0"
   },
-  "main": "./out/src/extension",
+  "main": "./dist/extension",
   "activationEvents": [
     "onCommand:incrementor.incByOne",
     "onCommand:incrementor.decByOne",
@@ -191,8 +191,9 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "webpack --mode production --colors",
+    "compile": "webpack --mode development",
+    "watch": "webpack --mode development --watch --display=minimal",
     "test": "node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
@@ -202,10 +203,14 @@
     "@types/node": "^12.12.35",
     "@types/vscode": "1.40.0",
     "chai": "^4.2.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "mocha": "^7.1.1",
+    "ts-loader": "^7.0.0",
     "tslint": "^6.1.1",
     "tslint-eslint-rules": "^5.4.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "bignumber.js": "^9.0.0",
