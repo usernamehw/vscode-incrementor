@@ -4,20 +4,18 @@
   "description": "Advanced increment / decrement actions for just about anything!",
   "icon": "images/icon.svg",
   "version": "0.1.0",
-  "publisher": "nmsmith89",
+  "publisher": "usernamehw",
   "galleryBanner": {
     "color": "#E1F5FE",
     "theme": "light"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
-    "url": "https://github.com/nmsmith22389/vscode-incrementor/issues",
-    "email": "nmsmith22389@gmail.com"
+    "url": "https://github.com/usernamehw/vscode-incrementor/issues"
   },
-  "homepage": "https://github.com/nmsmith22389/vscode-incrementor",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nmsmith22389/vscode-incrementor.git"
+    "url": "https://github.com/usernamehw/vscode-incrementor.git"
   },
   "categories": [
     "Formatters",

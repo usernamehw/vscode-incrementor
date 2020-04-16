@@ -1,6 +1,4 @@
-# **Incrementor** *(VSCode Extension)*
-
-> Increment or decrement just about anything!
+> This is a fork of https://github.com/nmsmith22389/vscode-incrementor
 
 ![Demo](images/demo-main.gif)
 
@@ -14,8 +12,6 @@
 * [Extension Settings](#extension-settings)
   * [Keybindings](#keybindings)
 * [Known Issues](#known-issues)
-* [Change Log](#change-log)
-
 
 ## Features
 
@@ -173,13 +169,3 @@ For now, default keybindings aren't being included but these are the ones I use.
   "key": "ctrl+alt+cmd+down"
 }
 ```
-
-## Known Issues
-
-* When using the redo command *(e.g. `cmd+shift+z`)* the selections can get a little wonky. I have no idea why it does that but I am looking for a solution.
-
-    Undo works as expected.
-
-## Change Log
-
-See the changelog [here](CHANGELOG.md).
