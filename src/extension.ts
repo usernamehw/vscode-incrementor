@@ -11,8 +11,7 @@ import TextDocument = vscode.TextDocument;
 import * as _ from 'lodash';
 import BigNumber from 'bignumber.js';
 
-export function activate(context: vscode.ExtensionContext) {
-
+export function activate(context: vscode.ExtensionContext): void {
 	const inc = new Incrementor();
 
 	const comIncOne = vscode.commands.registerCommand('incrementor.incByOne', () => {
@@ -56,33 +55,33 @@ export class Incrementor {
 	 *
 	 * @readonly
 	 */
-	private regex = {
-		number:  /^(-?\d+\.?\d*)([a-zA-Z%]*)$/,
-		enum:    /^(?:[\w]+-)*[\w]+$/,
-		rgb:     /^(rgba(?=\((?:[\s\d]+,){3})|rgb(?!\((?:[\s\d]+,){3}))\(\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d)\s*(?:\)|(?:,\s*(1|0?\.\d+|0)\)))$/,
+	private readonly regex = {
+		number: /^(-?\d+\.?\d*)([a-zA-Z%]*)$/,
+		enum: /^(?:[\w]+-)*[\w]+$/,
+		rgb: /^(rgba(?=\((?:[\s\d]+,){3})|rgb(?!\((?:[\s\d]+,){3}))\(\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d)\s*(?:\)|(?:,\s*(1|0?\.\d+|0)\)))$/,
 		rgbLine: /(rgba(?=\((?:[\s\d]+,){3})|rgb(?!\((?:[\s\d]+,){3}))\(\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d)\s*(?:\)|(?:,\s*(1|0?\.\d+|0)\)))/,
-		hex:     /^#(?:([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})|([A-Fa-f0-9]{3}))$/,
+		hex: /^#(?:([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})|([A-Fa-f0-9]{3}))$/,
 	};
 
-	private vEditor:       TextEditor;
-	private edit:          TextEditorEdit;
-	private vDoc:          TextDocument;
-	private vSel:          Selection[];
-	private delta:         number;
-	private wordRange:     Range;
-	private isReversed:    boolean;
-	private wordString:    string;
-	private lastRange:     Range;
+	private vEditor: TextEditor;
+	private edit: TextEditorEdit;
+	private vDoc: TextDocument;
+	private vSel: Selection[];
+	private delta: number;
+	private wordRange: Range;
+	private isReversed: boolean;
+	private wordString: string;
+	private lastRange: Range;
 	private lastValueDiff: number;
 	private replaceRanges: Selection[];
-	private settings     = vscode.workspace.getConfiguration('incrementor');
+	private settings = vscode.workspace.getConfiguration('incrementor');
 	public action = {
-		incByOne:   1,
-		decByOne:   -1,
+		incByOne: 1,
+		decByOne: -1,
 		incByTenth: 0.1,
 		decByTenth: -0.1,
-		incByTen:   10,
-		decByTen:   -10
+		incByTen: 10,
+		decByTen: -10,
 	};
 	private hiddenSels: {
 		isOn: boolean;
@@ -104,12 +103,10 @@ export class Incrementor {
 	 *
 	 *  _(taken from the `this.action` object)_
 	 */
-	run(delta: number) {
+	run(delta: number): void {
 		// BigNumber.config({ ERRORS: false });
 
-		const action = _.findKey(this.action, (o) => {
-			return o === delta;
-		});
+		const action = _.findKey(this.action, o => o === delta);
 
 		this.updateSettings();
 
@@ -121,18 +118,18 @@ export class Incrementor {
 		this.hiddenSels = {
 			isOn: false,
 			pos: undefined,
-			diff: 0
+			diff: 0,
 		};
 		this.replaceRanges = [];
 
 		// Iterate through selections.
-		this.vEditor.edit((edit) => {
+		this.vEditor.edit(edit => {
 			this.edit = edit;
 
 			for (const sel of this.vSel) {
-				this.wordRange = (sel.isEmpty) ? this.vDoc.getWordRangeAtPosition(sel.active) : sel;
+				this.wordRange = sel.isEmpty ? this.vDoc.getWordRangeAtPosition(sel.active) : sel;
 				this.wordString = this.vDoc.getText(this.wordRange);
-				this.isReversed = (sel.isEmpty) ? false : sel.isReversed;
+				this.isReversed = sel.isEmpty ? false : sel.isReversed;
 
 				if (this.wordRange && !this.wordRange.isEmpty) {
 					this.changeNumber() ||
@@ -145,19 +142,19 @@ export class Incrementor {
 		this.vEditor.selections = this.replaceRanges;
 	}
 
-	private updateSettings() {
+	private updateSettings(): void {
 		this.vEditor = vscode.window.activeTextEditor;
 		this.vDoc = this.vEditor.document;
 		this.vSel = this.vEditor.selections;
 		this.settings = vscode.workspace.getConfiguration('incrementor');
 
 		this.action = {
-			incByOne: this.settings['incByOneValue'] || 1,
-			decByOne: this.settings['decByOneValue'] || -1,
-			incByTenth: (/^(?:[01](?:\.0)?|0\.[1-9])$/.test(this.settings['incByTenthValue'])) ? this.settings['incByTenthValue'] : 0.1,
-			decByTenth: (/^(?:[01](?:\.0)?|0\.[1-9])$/.test(this.settings['decByTenthValue'])) ? this.settings['decByTenthValue'] : -0.1,
-			incByTen: this.settings['incByTenValue'] || 10,
-			decByTen: this.settings['decByTenValue'] || -10
+			incByOne: this.settings.incByOneValue || 1,
+			decByOne: this.settings.decByOneValue || -1,
+			incByTenth: /^(?:[01](?:\.0)?|0\.[1-9])$/.test(this.settings.incByTenthValue) ? this.settings.incByTenthValue : 0.1,
+			decByTenth: /^(?:[01](?:\.0)?|0\.[1-9])$/.test(this.settings.decByTenthValue) ? this.settings.decByTenthValue : -0.1,
+			incByTen: this.settings.incByTenValue || 10,
+			decByTen: this.settings.decByTenValue || -10,
 		};
 	}
 
@@ -172,9 +169,9 @@ export class Incrementor {
 		if (this.regex.number.test(this.wordString)) {
 			const prevChar = this.getPrevChar();
 			let tempString = this.wordString;
-			let tempRange  = this.wordRange;
+			let tempRange = this.wordRange;
 
-			if (prevChar.char === '-' && tempString[0] !== '-') {
+			if (prevChar.char === '-' && !tempString.startsWith('-')) {
 				tempRange = new Range(prevChar.pos, this.wordRange.end);
 				tempString = this.vDoc.getText(tempRange);
 			}
@@ -184,13 +181,12 @@ export class Incrementor {
 			// [2] = String part (if any)
 			const wordReg = this.regex.number.exec(tempString);
 			let partNumber = new BigNumber(wordReg[1]);
-			const partText = (wordReg[2]) ? wordReg[2] : '';
+			const partText = wordReg[2] ? wordReg[2] : '';
 
 			if (partNumber.isFinite()) {
-
 				partNumber = partNumber.plus(this.delta);
 
-				const decPlaces = new BigNumber(this.settings['decimalPlaces']).absoluteValue();
+				const decPlaces = new BigNumber(this.settings.decimalPlaces).absoluteValue();
 
 				// decPlaces = 0 === rounding off
 				if (decPlaces.isInteger() && decPlaces.isGreaterThan(0)) {
@@ -210,8 +206,8 @@ export class Incrementor {
 
 	private changeEnum() {
 		if (this.regex.enum.test(this.wordString) && this.settings.has('enums')) {
-			let prevChar   = (this.wordRange.start.character > 0) ? this.getPrevChar() : undefined;
-			let tempRange  = this.wordRange;
+			let prevChar = this.wordRange.start.character > 0 ? this.getPrevChar() : undefined;
+			let tempRange = this.wordRange;
 			let tempString = this.wordString;
 
 			let loopStart = true;
@@ -249,13 +245,13 @@ export class Incrementor {
 			}
 
 			let wordChanged = tempString;
-			for (const enums of this.settings['enums']) {
+			for (const enums of this.settings.enums) {
 				if (_.includes(enums, tempString)) {
 					const eIndex = _.indexOf(enums, tempString);
 
 					// Cycle enums
 					if (this.delta === this.action.incByOne) {
-						if (enums.length - 1 === eIndex && this.settings['loopEnums']) {
+						if (enums.length - 1 === eIndex && this.settings.loopEnums) {
 							// Is last, Cycle around
 							wordChanged = enums[0];
 						} else if (enums.length - 1 === eIndex) {
@@ -265,7 +261,7 @@ export class Incrementor {
 							wordChanged = enums[eIndex + 1];
 						}
 					} else if (this.delta === this.action.decByOne) {
-						if (eIndex === 0 && this.settings['loopEnums']) {
+						if (eIndex === 0 && this.settings.loopEnums) {
 							// Is last, Cycle around
 							wordChanged = enums[enums.length - 1];
 						} else if (eIndex === 0) {
@@ -286,7 +282,7 @@ export class Incrementor {
 		}
 	}
 
-	/*private changeRGB(editor: TextEditorEdit) {
+	/* private changeRGB(editor: TextEditorEdit) {
 		let exps: {range: Range, text: string} = this.checkLineForPattern(this.wordRange.start, this.regex.rgbLine);
 
 		if (exps) {
@@ -329,7 +325,7 @@ export class Incrementor {
 		}
 	}*/
 
-	private doNothing(sel: Selection) {
+	private doNothing(sel: Selection): boolean {
 		this.replaceRanges.push(sel);
 
 		return true;
@@ -339,7 +335,7 @@ export class Incrementor {
 		if (this.wordRange.start.character === 0) {
 			return {
 				pos,
-				char: ''
+				char: '',
 			};
 		}
 
@@ -349,7 +345,7 @@ export class Incrementor {
 
 		return {
 			pos,
-			char: this.vDoc.getText(new Range(pos, pos.translate(0, 1)))
+			char: this.vDoc.getText(new Range(pos, pos.translate(0, 1))),
 		};
 	}
 
@@ -360,7 +356,7 @@ export class Incrementor {
 	 * @param pos The Position to look after.
 	 * @returns `true` if Selections exist after `pos`, otherwise `false`.
 	 */
-	private hasSelectionsAfter(pos: Position) {
+	private hasSelectionsAfter(pos: Position): boolean {
 		for (const sel of this.replaceRanges) {
 			if (sel.start.isAfter(pos)) {
 				return true;
@@ -370,7 +366,7 @@ export class Incrementor {
 		return false;
 	}
 
-	private hasHiddenSelsAfter(pos: Position) {
+	private hasHiddenSelsAfter(pos: Position): boolean {
 		let i = 0;
 		for (const sel of this.vSel) {
 			if (!this.replaceRanges[i] && sel.start.isAfter(pos)) {
@@ -398,7 +394,7 @@ export class Incrementor {
 		});
 	}
 
-	/*private shiftLastSelection(amount: number): void {
+	/* private shiftLastSelection(amount: number): void {
 		const lastIndex = this.replaceRanges.length - 1;
 
 		this.replaceRanges[lastIndex] = new Selection(this.replaceRanges[lastIndex].start.translate(0, amount), this.replaceRanges[lastIndex].end.translate(0, amount));
@@ -458,7 +454,7 @@ export class Incrementor {
 		return true;
 	}
 
-	/*private getPrevText(length: number, pos = this.wordRange.start) {
+	/* private getPrevText(length: number, pos = this.wordRange.start) {
 		let len = new BigNumber(length).abs();
 		len = (len.isZero()) ? new BigNumber(1) : len;
 		const range = new Range(pos.translate(0, len.negated().toNumber()), pos);
@@ -477,7 +473,7 @@ export class Incrementor {
 	 * @param pattern Pattern to search for.
 	 * @returns No matches: false; One match: {range, text}; Many matches: array of match objects;
 	 */
-	/*private checkLineForPattern(pos: Position, pattern: RegExp) {
+	/* private checkLineForPattern(pos: Position, pattern: RegExp) {
 		const line = this.vDoc.lineAt(pos);
 		const lineText = this.vDoc.getText(line.range);
 		const results = [];
