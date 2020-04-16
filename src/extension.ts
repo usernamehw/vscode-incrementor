@@ -71,7 +71,7 @@ export class Incrementor {
 	private lastRange: Range;
 	private lastValueDiff: number;
 	private replaceRanges: Selection[];
-	private settings = vscode.workspace.getConfiguration('incrementor');
+
 	public action = {
 		incByOne: 1,
 		decByOne: -1,
@@ -143,15 +143,14 @@ export class Incrementor {
 		this.vEditor = vscode.window.activeTextEditor;
 		this.vDoc = this.vEditor.document;
 		this.vSel = this.vEditor.selections;
-		this.settings = vscode.workspace.getConfiguration('incrementor');
 
 		this.action = {
-			incByOne: this.settings.incByOneValue || 1,
-			decByOne: this.settings.decByOneValue || -1,
-			incByTenth: /^(?:[01](?:\.0)?|0\.[1-9])$/.test(this.settings.incByTenthValue) ? this.settings.incByTenthValue : 0.1,
-			decByTenth: /^(?:[01](?:\.0)?|0\.[1-9])$/.test(this.settings.decByTenthValue) ? this.settings.decByTenthValue : -0.1,
-			incByTen: this.settings.incByTenValue || 10,
-			decByTen: this.settings.decByTenValue || -10,
+			incByOne: config.incByOneValue || 1,
+			decByOne: config.decByOneValue || -1,
+			incByTenth: /^(?:[01](?:\.0)?|0\.[1-9])$/.test(String(config.incByTenthValue)) ? config.incByTenthValue : 0.1,
+			decByTenth: /^(?:[01](?:\.0)?|0\.[1-9])$/.test(String(config.decByTenthValue)) ? config.decByTenthValue : -0.1,
+			incByTen: config.incByTenValue || 10,
+			decByTen: config.decByTenValue || -10,
 		};
 	}
 
@@ -183,7 +182,7 @@ export class Incrementor {
 			if (partNumber.isFinite()) {
 				partNumber = partNumber.plus(this.delta);
 
-				const decPlaces = new BigNumber(this.settings.decimalPlaces).absoluteValue();
+				const decPlaces = new BigNumber(config.decimalPlaces).absoluteValue();
 
 				// decPlaces = 0 === rounding off
 				if (decPlaces.isInteger() && decPlaces.isGreaterThan(0)) {
@@ -202,7 +201,7 @@ export class Incrementor {
 	}
 
 	private changeEnum() {
-		if (this.settings.has('enums')) {
+		if (config.enums.length) {
 			let prevChar = this.wordRange.start.character > 0 ? this.getPrevChar() : undefined;
 			let tempRange = this.wordRange;
 			let tempString = this.wordString;
@@ -242,13 +241,13 @@ export class Incrementor {
 			}
 
 			let wordChanged = tempString;
-			for (const enums of this.settings.enums) {
+			for (const enums of config.enums) {
 				if (enums.includes(tempString)) {
 					const eIndex = enums.indexOf(tempString);
 
 					// Cycle enums
 					if (this.delta === this.action.incByOne) {
-						if (enums.length - 1 === eIndex && this.settings.loopEnums) {
+						if (enums.length - 1 === eIndex && config.loopEnums) {
 							// Is last, Cycle around
 							wordChanged = enums[0];
 						} else if (enums.length - 1 === eIndex) {
@@ -258,7 +257,7 @@ export class Incrementor {
 							wordChanged = enums[eIndex + 1];
 						}
 					} else if (this.delta === this.action.decByOne) {
-						if (eIndex === 0 && this.settings.loopEnums) {
+						if (eIndex === 0 && config.loopEnums) {
 							// Is last, Cycle around
 							wordChanged = enums[enums.length - 1];
 						} else if (eIndex === 0) {
