@@ -12,7 +12,7 @@ chai.should();
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import * as _ from 'lodash';
-import {Incrementor} from '../src/extension';
+import { Incrementor } from '../src/extension';
 
 let vEditor: vscode.TextEditor = undefined;
 let vDoc: vscode.TextDocument = undefined;

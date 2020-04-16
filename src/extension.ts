@@ -105,7 +105,7 @@ export class Incrementor {
      *  _(taken from the `this.action` object)_
      */
     run(delta: number) {
-        BigNumber.config({ ERRORS: false });
+        // BigNumber.config({ ERRORS: false });
 
         const action = _.findKey(this.action, (o) => {
             return o === delta;
@@ -193,8 +193,8 @@ export class Incrementor {
                 const decPlaces = new BigNumber(this.settings['decimalPlaces']).absoluteValue();
 
                 // decPlaces = 0 === rounding off
-                if (decPlaces.isInteger() && decPlaces.greaterThan(0)) {
-                    partNumber = partNumber.round(decPlaces.toNumber());
+                if (decPlaces.isInteger() && decPlaces.isGreaterThan(0)) {
+                    partNumber = partNumber.integerValue(); // partNumber = partNumber.round(decPlaces.toNumber());
                 }
 
                 const wordChanged = partNumber.toString() + partText;
