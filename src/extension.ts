@@ -57,7 +57,7 @@ export class Incrementor {
 	 */
 	private readonly regex = {
 		number: /^(-?\d+\.?\d*)([a-zA-Z%]*)$/,
-		enum: /^(?:[\w]+-)*[\w]+$/,
+		// enum: /^(?:[\w]+-)*[\w]+$/,
 		// rgb: /^(rgba(?=\((?:[\s\d]+,){3})|rgb(?!\((?:[\s\d]+,){3}))\(\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d)\s*(?:\)|(?:,\s*(1|0?\.\d+|0)\)))$/,
 		// rgbLine: /(rgba(?=\((?:[\s\d]+,){3})|rgb(?!\((?:[\s\d]+,){3}))\(\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d)\s*(?:\)|(?:,\s*(1|0?\.\d+|0)\)))/,
 		// hex: /^#(?:([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})([A-Fa-f0-9]{2})|([A-Fa-f0-9]{3}))$/,
@@ -205,7 +205,7 @@ export class Incrementor {
 	}
 
 	private changeEnum() {
-		if (this.regex.enum.test(this.wordString) && this.settings.has('enums')) {
+		if (this.settings.has('enums')) {
 			let prevChar = this.wordRange.start.character > 0 ? this.getPrevChar() : undefined;
 			let tempRange = this.wordRange;
 			let tempString = this.wordString;

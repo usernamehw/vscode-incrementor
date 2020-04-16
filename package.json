@@ -108,8 +108,7 @@
 					"items": {
 						"type": "array",
 						"items": {
-							"type": "string",
-							"pattern": "^[a-zA-Z_]-?(?:[\\w]+-)*[\\w]+$"
+							"type": "string"
 						}
 					},
 					"default": [
