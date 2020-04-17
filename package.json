@@ -35,6 +35,7 @@
 	},
 	"main": "./dist/extension",
 	"activationEvents": [
+		"onCommand:incrementor.incByCustomValue",
 		"onCommand:incrementor.incByOne",
 		"onCommand:incrementor.decByOne",
 		"onCommand:incrementor.incByTenth",
@@ -82,6 +83,11 @@
 			}
 		},
 		"commands": [
+			{
+				"command": "incrementor.incByCustomValue",
+				"title": "Increment by custom value",
+				"category": "Incrementor"
+			},
 			{
 				"command": "incrementor.incByOne",
 				"title": "Increment by 1",

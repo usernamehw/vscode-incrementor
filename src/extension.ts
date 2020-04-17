@@ -9,28 +9,42 @@ let config = vscode.workspace.getConfiguration(EXTENSION_NAME) as any as IConfig
 export function activate(context: vscode.ExtensionContext): void {
 	const inc = new Incrementor();
 
+	const comIncCustomValue = vscode.commands.registerTextEditorCommand('incrementor.incByCustomValue', async (editor, edit: TextEditorEdit, value: unknown) => {
+		if (typeof value === 'number') {
+			inc.run(editor, value);
+		} else if (value === undefined) {
+			const numString = await vscode.window.showInputBox({
+				prompt: 'Enter a number',
+			});
+			const n = Number(numString);
+			if (Number.isFinite(n)) {
+				inc.run(editor, n);
+			}
+		}
+	});
+
 	const comIncOne = vscode.commands.registerTextEditorCommand('incrementor.incByOne', editor => {
-		inc.run(editor, inc.action.incByOne);
+		inc.run(editor, 1);
 	});
 
 	const comDecOne = vscode.commands.registerTextEditorCommand('incrementor.decByOne', editor => {
-		inc.run(editor, inc.action.decByOne);
+		inc.run(editor, -1);
 	});
 
 	const comIncTenth = vscode.commands.registerTextEditorCommand('incrementor.incByTenth', editor => {
-		inc.run(editor, inc.action.incByTenth);
+		inc.run(editor, 0.1);
 	});
 
 	const comDecTenth = vscode.commands.registerTextEditorCommand('incrementor.decByTenth', editor => {
-		inc.run(editor, inc.action.decByTenth);
+		inc.run(editor, -0.1);
 	});
 
 	const comIncTen = vscode.commands.registerTextEditorCommand('incrementor.incByTen', editor => {
-		inc.run(editor, inc.action.incByTen);
+		inc.run(editor, 10);
 	});
 
 	const comDecTen = vscode.commands.registerTextEditorCommand('incrementor.decByTen', editor => {
-		inc.run(editor, inc.action.decByTen);
+		inc.run(editor, -10);
 	});
 
 	const onSettingChangeDisposable = vscode.workspace.onDidChangeConfiguration(e => {
@@ -40,7 +54,7 @@ export function activate(context: vscode.ExtensionContext): void {
 		config = vscode.workspace.getConfiguration(EXTENSION_NAME) as any as IConfig;
 	});
 
-	context.subscriptions.push(comIncOne, comDecOne, comIncTenth, comDecTenth, comIncTen, comDecTen, onSettingChangeDisposable);
+	context.subscriptions.push(comIncCustomValue, comIncOne, comDecOne, comIncTenth, comDecTenth, comIncTen, comDecTen, onSettingChangeDisposable);
 }
 
 /**
@@ -72,14 +86,6 @@ export class Incrementor {
 	private lastValueDiff: number;
 	private replaceRanges: Selection[];
 
-	public action = {
-		incByOne: 1,
-		decByOne: -1,
-		incByTenth: 0.1,
-		decByTenth: -0.1,
-		incByTen: 10,
-		decByTen: -10,
-	};
 	private hiddenSels: {
 		isOn: boolean;
 		pos: Position;
@@ -104,10 +110,6 @@ export class Incrementor {
 		this.vEditor = editor;
 		this.vDoc = this.vEditor.document;
 		this.vSel = this.vEditor.selections;
-
-		const action = Object.keys(this.action).find(x => this.action[x] === delta);
-
-		delta = this.action[action];
 
 		this.delta = delta;
 		this.lastRange = undefined;
@@ -234,7 +236,7 @@ export class Incrementor {
 					const eIndex = enums.indexOf(tempString);
 
 					// Cycle enums
-					if (this.delta === this.action.incByOne) {
+					if (this.delta === 1) {
 						if (enums.length - 1 === eIndex && config.loopEnums) {
 							// Is last, Cycle around
 							wordChanged = enums[0];
@@ -244,7 +246,7 @@ export class Incrementor {
 						} else {
 							wordChanged = enums[eIndex + 1];
 						}
-					} else if (this.delta === this.action.decByOne) {
+					} else if (this.delta === -1) {
 						if (eIndex === 0 && config.loopEnums) {
 							// Is last, Cycle around
 							wordChanged = enums[enums.length - 1];

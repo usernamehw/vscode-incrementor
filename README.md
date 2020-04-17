@@ -60,6 +60,24 @@ For this example we will be incrementing a number.
 * `Incrementor: Decrement by 0.1`
 * `Incrementor: Increment by 10`
 * `Incrementor: Decrement by 10`
+* `Incrementor: Increment by custom value`
+
+### Increment by custom value example:
+
+> When command is executed from Command Palette - it will prompt for the custom value
+
+```js
+{
+    "key": "ctrl+Up",
+    "command": "incrementor.incByCustomValue",
+    "args": 20
+},
+{
+    "key": "ctrl+Down",
+    "command": "incrementor.incByCustomValue",
+    "args": -20
+},
+```
 
 ## Extension Settings
 
@@ -95,27 +113,27 @@ For now, default keybindings aren't being included but these are the ones I use.
 
 ```json
 {
-  "command": "incrementor.incByOne",
-  "key": "ctrl+up"
+    "command": "incrementor.incByOne",
+    "key": "ctrl+up"
 },
 {
-  "command": "incrementor.decByOne",
-  "key": "ctrl+down"
+    "command": "incrementor.decByOne",
+    "key": "ctrl+down"
 },
 {
-  "command": "incrementor.incByTenth",
-  "key": "ctrl+alt+up"
+    "command": "incrementor.incByTenth",
+    "key": "ctrl+alt+up"
 },
 {
-  "command": "incrementor.decByTenth",
-  "key": "ctrl+alt+down"
+    "command": "incrementor.decByTenth",
+    "key": "ctrl+alt+down"
 },
 {
-  "command": "incrementor.incByTen",
-  "key": "ctrl+alt+cmd+up"
+    "command": "incrementor.incByTen",
+    "key": "ctrl+alt+cmd+up"
 },
 {
-  "command": "incrementor.decByTen",
-  "key": "ctrl+alt+cmd+down"
+    "command": "incrementor.decByTen",
+    "key": "ctrl+alt+cmd+down"
 }
 ```
