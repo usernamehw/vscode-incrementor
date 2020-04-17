@@ -63,55 +63,6 @@ For this example we will be incrementing a number.
 
 ## Extension Settings
 
-### `incrementor.enabled`
-
-Enables or disables Incrementor.
-
-* **Default:** true
-* **Must be:** Boolean
-
-### `incrementor.incByOneValue`
-
-The value *(ones place)* to increment a number by.
-
-* **Default:** 1
-* **Must be:** 1 to 9, Integer
-
-### `incrementor.decByOneValue`
-
-The value *(ones place)* to decrement a number by.
-
-* **Default:** -1
-* **Must be:** -1 to -9, Integer
-
-### `incrementor.incByTenthValue`
-
-The value *(tenths place)* to increment a number by
-
-* **Default:** 0.1
-* **Must be:** 0.1 to 0.9, Tenths place only
-
-### `incrementor.decByTenthValue`
-
-The value *(tenths place)* to decrement a number by
-
-* **Default:** -0.1
-* **Must be:** -0.1 to -0.9, Tenths place only
-
-### `incrementor.incByTenValue`
-
-The value *(tens place)* to increment a number by.
-
-* **Default:** 10
-* **Must be:** 10 to 90, Factor of 10
-
-### `incrementor.decByTenValue`
-
-The value *(tens place)* to decrement a number by.
-
-* **Default:** -10
-* **Must be:** -10 to -90, Factor of 10
-
 ### `incrementor.decimalPlaces`
 
 The number of decimal places to round incremented/decremented decimal numbers to.<br>*(a value of 0 will disable rounding)*

@@ -100,14 +100,12 @@ export class Incrementor {
 	 *
 	 *  _(taken from the `this.action` object)_
 	 */
-	run(editor, delta: number): void {
-		// BigNumber.config({ ERRORS: false });
-
+	run(editor: TextEditor, delta: number): void {
 		this.vEditor = editor;
+		this.vDoc = this.vEditor.document;
+		this.vSel = this.vEditor.selections;
 
 		const action = Object.keys(this.action).find(x => this.action[x] === delta);
-
-		this.updateSettings();
 
 		delta = this.action[action];
 
@@ -142,20 +140,6 @@ export class Incrementor {
 		});
 
 		this.vEditor.selections = this.replaceRanges;
-	}
-
-	private updateSettings(): void {
-		this.vDoc = this.vEditor.document;
-		this.vSel = this.vEditor.selections;
-
-		this.action = {
-			incByOne: config.incByOneValue || 1,
-			decByOne: config.decByOneValue || -1,
-			incByTenth: /^(?:[01](?:\.0)?|0\.[1-9])$/.test(String(config.incByTenthValue)) ? config.incByTenthValue : 0.1,
-			decByTenth: /^(?:[01](?:\.0)?|0\.[1-9])$/.test(String(config.decByTenthValue)) ? config.decByTenthValue : -0.1,
-			incByTen: config.incByTenValue || 10,
-			decByTen: config.decByTenValue || -10,
-		};
 	}
 
 	/**

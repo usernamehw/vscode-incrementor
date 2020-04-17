@@ -47,55 +47,6 @@
 			"type": "object",
 			"title": "Incrementor",
 			"properties": {
-				"incrementor.enabled": {
-					"type": "boolean",
-					"default": true,
-					"description": "Enables or disables Incrementor."
-				},
-				"incrementor.incByOneValue": {
-					"type": "integer",
-					"default": 1,
-					"maximum": 9,
-					"minimum": 1,
-					"description": "The value (ones place) to increment a number by."
-				},
-				"incrementor.decByOneValue": {
-					"type": "integer",
-					"default": -1,
-					"maximum": -1,
-					"minimum": -9,
-					"description": "The value (ones place) to decrement a number by."
-				},
-				"incrementor.incByTenthValue": {
-					"type": "number",
-					"default": 0.1,
-					"maximum": 0.9,
-					"minimum": 0.1,
-					"description": "The value (tenths place) to increment a number by."
-				},
-				"incrementor.decByTenthValue": {
-					"type": "number",
-					"default": -0.1,
-					"maximum": -0.1,
-					"minimum": -0.9,
-					"description": "The value (tenths place) to decrement a number by."
-				},
-				"incrementor.incByTenValue": {
-					"type": "integer",
-					"default": 10,
-					"maximum": 90,
-					"minimum": 10,
-					"multipleOf": 10,
-					"description": "The value (tens place) to increment a number by."
-				},
-				"incrementor.decByTenValue": {
-					"type": "integer",
-					"default": -10,
-					"maximum": -10,
-					"minimum": -90,
-					"multipleOf": 10,
-					"description": "The value (tens place) to decrement a number by."
-				},
 				"incrementor.decimalPlaces": {
 					"type": "integer",
 					"default": 0,
