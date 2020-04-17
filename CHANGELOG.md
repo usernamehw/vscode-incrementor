@@ -1,3 +1,7 @@
+## 0.1.3 `17 Apr 2020`
+
+- ✨ Handle the case when the word is not found under cursor
+
 ## 0.1.2 `17 Apr 2020`
 
 - ✨ Remove regex pattern matching of enums
