@@ -1,7 +1,7 @@
 import vscode, { Range, Selection, Position, TextEditor, TextEditorEdit, TextDocument } from 'vscode';
 
 import BigNumber from 'bignumber.js';
-import { IConfig } from './types';
+import { IConfig, IPosChar } from './types';
 
 const EXTENSION_NAME = 'incrementor';
 /**
@@ -212,7 +212,7 @@ export class Incrementor {
 		}
 	}
 
-	private changeEnum() {
+	private changeEnum(): boolean {
 		if (config.enums.length) {
 			let prevChar = this.wordRange.start.character > 0 ? this.getPrevChar() : undefined;
 			let tempRange = this.wordRange;
@@ -339,7 +339,7 @@ export class Incrementor {
 		return true;
 	}
 
-	private getPrevChar(pos?: Position) {
+	private getPrevChar(pos?: Position): IPosChar {
 		if (this.wordRange.start.character === 0) {
 			return {
 				pos,
