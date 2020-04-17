@@ -9,28 +9,28 @@ let config = vscode.workspace.getConfiguration(EXTENSION_NAME) as any as IConfig
 export function activate(context: vscode.ExtensionContext): void {
 	const inc = new Incrementor();
 
-	const comIncOne = vscode.commands.registerCommand('incrementor.incByOne', () => {
-		inc.run(inc.action.incByOne);
+	const comIncOne = vscode.commands.registerTextEditorCommand('incrementor.incByOne', editor => {
+		inc.run(editor, inc.action.incByOne);
 	});
 
-	const comDecOne = vscode.commands.registerCommand('incrementor.decByOne', () => {
-		inc.run(inc.action.decByOne);
+	const comDecOne = vscode.commands.registerTextEditorCommand('incrementor.decByOne', editor => {
+		inc.run(editor, inc.action.decByOne);
 	});
 
-	const comIncTenth = vscode.commands.registerCommand('incrementor.incByTenth', () => {
-		inc.run(inc.action.incByTenth);
+	const comIncTenth = vscode.commands.registerTextEditorCommand('incrementor.incByTenth', editor => {
+		inc.run(editor, inc.action.incByTenth);
 	});
 
-	const comDecTenth = vscode.commands.registerCommand('incrementor.decByTenth', () => {
-		inc.run(inc.action.decByTenth);
+	const comDecTenth = vscode.commands.registerTextEditorCommand('incrementor.decByTenth', editor => {
+		inc.run(editor, inc.action.decByTenth);
 	});
 
-	const comIncTen = vscode.commands.registerCommand('incrementor.incByTen', () => {
-		inc.run(inc.action.incByTen);
+	const comIncTen = vscode.commands.registerTextEditorCommand('incrementor.incByTen', editor => {
+		inc.run(editor, inc.action.incByTen);
 	});
 
-	const comDecTen = vscode.commands.registerCommand('incrementor.decByTen', () => {
-		inc.run(inc.action.decByTen);
+	const comDecTen = vscode.commands.registerTextEditorCommand('incrementor.decByTen', editor => {
+		inc.run(editor, inc.action.decByTen);
 	});
 
 	const onSettingChangeDisposable = vscode.workspace.onDidChangeConfiguration(e => {
@@ -100,8 +100,10 @@ export class Incrementor {
 	 *
 	 *  _(taken from the `this.action` object)_
 	 */
-	run(delta: number): void {
+	run(editor, delta: number): void {
 		// BigNumber.config({ ERRORS: false });
+
+		this.vEditor = editor;
 
 		const action = Object.keys(this.action).find(x => this.action[x] === delta);
 
@@ -140,7 +142,6 @@ export class Incrementor {
 	}
 
 	private updateSettings(): void {
-		this.vEditor = vscode.window.activeTextEditor;
 		this.vDoc = this.vEditor.document;
 		this.vSel = this.vEditor.selections;
 
