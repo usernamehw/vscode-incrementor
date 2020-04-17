@@ -127,9 +127,9 @@ export class Incrementor {
 
 			for (const sel of this.vSel) {
 				this.wordRange = sel.isEmpty ? this.vDoc.getWordRangeAtPosition(sel.active) : sel;
-				if (this.wordRange === undefined) {
-					// TODO: handle undefined range case
-				}
+				// if (this.wordRange === undefined) {
+				// 	// TODO: handle undefined range case
+				// }
 				this.wordString = this.vDoc.getText(this.wordRange);
 				this.isReversed = sel.isEmpty ? false : sel.isReversed;
 
