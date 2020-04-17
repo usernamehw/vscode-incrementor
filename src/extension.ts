@@ -4,7 +4,29 @@ import BigNumber from 'bignumber.js';
 import { IConfig } from './types';
 
 const EXTENSION_NAME = 'incrementor';
-let config = vscode.workspace.getConfiguration(EXTENSION_NAME) as any as IConfig;
+/**
+ * getWordRangeAtPosition returns different results based on language (different word separators)
+ * When it returns undefined - this regexp will be used to match a word picked from `incrementor.enums`
+ * Example of this regexp with the default enums:
+ * @example
+ * /true|false|let|const/i
+ */
+let enumRegexp: RegExp;
+let config: IConfig;
+updateConfig();
+
+
+function updateConfig(): void {
+	config = vscode.workspace.getConfiguration(EXTENSION_NAME) as any as IConfig;
+
+	const allEnums = [];
+	for (const enums of config.enums) {
+		for (const item of enums) {
+			allEnums.push(item);
+		}
+	}
+	enumRegexp = new RegExp(allEnums.join('|'), 'i');
+}
 
 export function activate(context: vscode.ExtensionContext): void {
 	const inc = new Incrementor();
@@ -51,7 +73,7 @@ export function activate(context: vscode.ExtensionContext): void {
 		if (!e.affectsConfiguration(EXTENSION_NAME)) {
 			return;
 		}
-		config = vscode.workspace.getConfiguration(EXTENSION_NAME) as any as IConfig;
+		updateConfig();
 	});
 
 	context.subscriptions.push(comIncCustomValue, comIncOne, comDecOne, comIncTenth, comDecTenth, comIncTen, comDecTen, onSettingChangeDisposable);
@@ -127,9 +149,9 @@ export class Incrementor {
 
 			for (const sel of this.vSel) {
 				this.wordRange = sel.isEmpty ? this.vDoc.getWordRangeAtPosition(sel.active) : sel;
-				// if (this.wordRange === undefined) {
-				// 	// TODO: handle undefined range case
-				// }
+				if (this.wordRange === undefined) {
+					this.wordRange = this.vDoc.getWordRangeAtPosition(sel.active, enumRegexp);
+				}
 				this.wordString = this.vDoc.getText(this.wordRange);
 				this.isReversed = sel.isEmpty ? false : sel.isReversed;
 
