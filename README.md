@@ -81,31 +81,17 @@ For this example we will be incrementing a number.
 
 ## Extension Settings
 
-### `incrementor.decimalPlaces`
+<details>
 
-The number of decimal places to round incremented/decremented decimal numbers to.<br>*(a value of 0 will disable rounding)*
+<summary> Table of contributed settings:</summary>
 
-* **Default:** 0
-* **Must be:** 0 to 10, Integer
+| Name | Default | Description |
+| --- | --- | --- |
+| `incrementor.enums | [["false", "true"], ["let", "const"]] | An array of arrays, each containing a list of enums to cycle through. |
+| incrementor.loopEnums | **true** | After reaching the end of an Enum set, start back at the beginning. |
+| incrementor.decimalPlaces | **0** | The number of decimal places to round incremented/decremented decimal numbers to.<br>*(a value of 0 will disable rounding) |
 
-### `incrementor.loopEnums`
-
-After reaching the end of an Enum set, start back at the beginning.
-
-* **Default:** true
-* **Must be:** Boolean
-
-### `incrementor.enums`
-
-An array of arrays, each containing a list of enums to cycle through.
-
-* **Default:** `[["false", "true"], ["let", "const"]]`
-* **Must be:**
-  ```
-  Array >
-    Arrays >
-      Strings
-  ```
+</details>
 
 ### Keybindings
 
