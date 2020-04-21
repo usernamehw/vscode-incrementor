@@ -2,13 +2,14 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "ES2015",
-        "outDir": "out",
+        "outDir": "dist",
         "lib": [
             "es6"
         ],
 		"sourceMap": true,
+		"types": ["node", "mocha", "chai"],
 		"esModuleInterop": true,
-        "rootDir": ".",
+        "rootDir": "src",
         "skipLibCheck": true
     },
     "exclude": [

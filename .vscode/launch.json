@@ -12,6 +12,19 @@
 			"outFiles": [
 				"${workspaceFolder}/out/**/*.js"
 			],
+		},
+		{
+			"name": "Run Extension Tests",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"${workspaceRoot}/src/test/env/test-env.ts",
+				// "--disable-extensions",
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionTestsPath=${workspaceFolder}/dist/test/suite/index",
+			],
+			"outFiles": ["${workspaceFolder}/dist/test/**/*.js"],
 		}
 	]
 }

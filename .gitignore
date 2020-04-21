@@ -4,3 +4,4 @@ typings
 .DS_Store
 dist
 *.vsix
+src/env/test-env.ts
