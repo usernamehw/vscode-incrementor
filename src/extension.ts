@@ -9,7 +9,7 @@ const EXTENSION_NAME = 'incrementor';
  * When it returns undefined - this regexp will be used to match a word picked from `incrementor.enums`
  * Example of this regexp with the default enums:
  * @example
- * /true|false|let|const/i
+ * /true|false|let|const/
  */
 let enumRegexp: RegExp;
 let config: IConfig;
@@ -25,7 +25,7 @@ function updateConfig(): void {
 			allEnums.push(item);
 		}
 	}
-	enumRegexp = new RegExp(allEnums.join('|'), 'i');
+	enumRegexp = new RegExp(allEnums.join('|'));
 }
 
 export function activate(context: vscode.ExtensionContext): void {
