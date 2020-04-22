@@ -1,14 +1,11 @@
 import { suite, test, beforeEach, afterEach, before, describe, it } from 'mocha';
 import vscode, { Range, Position, Selection } from 'vscode';
-import _ from 'lodash';
 import { expect } from 'chai';
 
-import { Incrementor } from '../../extension';
 
 const DELAY_VALUE = 100;
 const editor = vscode.window.activeTextEditor;
 const { document } = editor;
-const incrementor = new Incrementor();
 
 const delay = async (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
