@@ -89,7 +89,7 @@ export class Incrementor {
 	 * @readonly
 	 */
 	private readonly regex = {
-		number: /^(-?\d+\.?\d*)([a-zA-Z%]*)$/,
+		number: /(-?\d+\.?\d*)([a-zA-Z%]*)/,
 		// enum: /^(?:[\w]+-)*[\w]+$/,
 		// rgb: /^(rgba(?=\((?:[\s\d]+,){3})|rgb(?!\((?:[\s\d]+,){3}))\(\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d)\s*(?:\)|(?:,\s*(1|0?\.\d+|0)\)))$/,
 		// rgbLine: /(rgba(?=\((?:[\s\d]+,){3})|rgb(?!\((?:[\s\d]+,){3}))\(\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d),\s*(2[0-5]{2}|1\d{2}|[1-9]\d|\d)\s*(?:\)|(?:,\s*(1|0?\.\d+|0)\)))/,
@@ -149,6 +149,9 @@ export class Incrementor {
 
 			for (const sel of this.vSel) {
 				this.wordRange = sel.isEmpty ? this.vDoc.getWordRangeAtPosition(sel.active) : sel;
+				if (this.wordRange === undefined) {
+					this.wordRange = this.vDoc.getWordRangeAtPosition(sel.active, this.regex.number);
+				}
 				if (this.wordRange === undefined) {
 					this.wordRange = this.vDoc.getWordRangeAtPosition(sel.active, enumRegexp);
 				}
