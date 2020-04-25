@@ -148,12 +148,12 @@ export class Incrementor {
 			this.edit = edit;
 
 			for (const sel of this.vSel) {
-				this.wordRange = sel.isEmpty ? this.vDoc.getWordRangeAtPosition(sel.active) : sel;
+				this.wordRange = sel.isEmpty ? this.vDoc.getWordRangeAtPosition(sel.active, enumRegexp) : sel;
 				if (this.wordRange === undefined) {
 					this.wordRange = this.vDoc.getWordRangeAtPosition(sel.active, this.regex.number);
 				}
 				if (this.wordRange === undefined) {
-					this.wordRange = this.vDoc.getWordRangeAtPosition(sel.active, enumRegexp);
+					this.wordRange = this.vDoc.getWordRangeAtPosition(sel.active);
 				}
 				this.wordString = this.vDoc.getText(this.wordRange);
 				this.isReversed = sel.isEmpty ? false : sel.isReversed;
