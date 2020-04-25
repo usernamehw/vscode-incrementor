@@ -1,3 +1,7 @@
+## 0.1.4 `25 Apr 2020`
+
+- ✨ Allow enums starting with a minus sign
+
 ## 0.1.3 `17 Apr 2020`
 
 - ✨ Handle the case when the word is not found under cursor
@@ -9,7 +13,7 @@
 
 ## 0.1.1 `16 Apr 2020`
 
-- Remove keybindings contribution
+- 🐛 Remove keybindings contribution
 
 ## 0.1.0 `16 Apr 2020`
 
