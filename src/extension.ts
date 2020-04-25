@@ -12,12 +12,13 @@ const EXTENSION_NAME = 'incrementor';
  * /true|false|let|const/
  */
 let enumRegexp: RegExp;
-let config: IConfig;
+export let config: IConfig;
 updateConfig();
 
 
 function updateConfig(): void {
 	config = vscode.workspace.getConfiguration(EXTENSION_NAME) as any as IConfig;
+	// config = JSON.parse(JSON.stringify(vscode.workspace.getConfiguration(EXTENSION_NAME))) as IConfig;
 
 	const allEnums = [];
 	for (const enums of config.enums) {

@@ -87,7 +87,7 @@ For this example we will be incrementing a number.
 
 | Name | Default | Description |
 | --- | --- | --- |
-| `incrementor.enums | [["false", "true"], ["let", "const"]] | An array of arrays, each containing a list of enums to cycle through. |
+| incrementor.enums | [["false", "true"], ["let", "const"]] | An array of arrays, each containing a list of enums to cycle through. |
 | incrementor.loopEnums | **true** | After reaching the end of an Enum set, start back at the beginning. |
 | incrementor.decimalPlaces | **0** | The number of decimal places to round incremented/decremented decimal numbers to.<br>*(a value of 0 will disable rounding) |
 

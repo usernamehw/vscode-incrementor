@@ -2,6 +2,7 @@ import { suite, test, beforeEach, afterEach, before, describe, it } from 'mocha'
 import vscode, { Range, Position, Selection } from 'vscode';
 import { expect } from 'chai';
 
+import { config } from '../../extension';
 
 const DELAY_VALUE = 100;
 const editor = vscode.window.activeTextEditor;
@@ -9,6 +10,10 @@ const { document } = editor;
 
 const delay = async (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
+config.enums = [
+	['one', 'two'],
+	['❤', '🧡', '💛'],
+];
 
 function getEntireRange(): vscode.Range {
 	const lastLineRange = document.lineAt(document.lineCount - 1).range;
@@ -50,16 +55,14 @@ async function incByCustomValue(value: number): Promise<void> {
 interface IIdk {
 	startOfTheDocument: [number, number, number, number];
 }
-const quickSelection: IIdk = {
-	startOfTheDocument: [0, 0, 0, 1],
+interface Sel {
+	[key: string]: [number, number, number, number];
+}
+const sel: Sel = {
+	startOfTheDocument: [0, 0, 0, 0],
 };
 function setSelection(n1: [number, number, number, number]): void {
 	editor.selection = new Selection(...n1);
-	// if (typeof n3 === 'number' && typeof n4 === 'number') {
-	// 	editor.selection = new Selection(n1, n2, n3, n4);
-	// } else {
-	// 	editor.selection = new Selection(n1, n2, n1, n2);
-	// }
 }
 
 beforeEach(done => setTimeout(done, 100));
@@ -93,12 +96,13 @@ describe('One cursor, simple examples', () => {
 		expect(text).to.equal('-10');
 	});
 
-	// it('Increment -512 by 0.1  should be -511.9', async () => {
-	// 	await setDocumentText('-100');
-	// 	await runIncrement01();
-	// 	const text = await getAllEditorText();
-	// 	expect(text).to.equal('-99.9');
-	// });
+	it('Increment -512 by 0.1  should be -511.9', async () => {
+		await setDocumentText('-512');
+		setSelection(sel.startOfTheDocument);
+		await inc01();
+		const text = await getAllEditorText();
+		expect(text).to.equal('-511.9');
+	});
 	it('Decrement -20 by 0.1  should be -20.1', async () => {
 		await setDocumentText('-20');
 		await dec01();
@@ -134,5 +138,49 @@ describe('Custom values', () => {
 		await incByCustomValue(-500);
 		const text = await getAllEditorText();
 		expect(text).to.equal('-512');
+	});
+});
+
+describe('Enums', () => {
+	it('one => two', async () => {
+		await setDocumentText('one');
+		await inc();
+		const text = await getAllEditorText();
+		expect(text).to.equal('two');
+	});
+	it('❤ => 🧡', async () => {
+		await setDocumentText('❤');
+		await inc();
+		const text = await getAllEditorText();
+		expect(text).to.equal('🧡');
+	});
+	it('💛 => ❤ (cycle)', async () => {
+		await setDocumentText('💛');
+		await inc();
+		const text = await getAllEditorText();
+		expect(text).to.equal('❤');
+	});
+});
+
+describe('Multi cursor', () => {
+	it('Multi line', async () => {
+		const multilinetext = `1px\n2px`;
+		await setDocumentText(multilinetext);
+		const firstSelection = new Selection(...sel.startOfTheDocument);
+		const secondSelection = new Selection(1, 0, 1, 0);
+		editor.selections = [firstSelection, secondSelection];
+		await inc();
+		const text = await getAllEditorText();
+		const multilineResult = `2px\n3px`;
+		expect(text).to.equal(multilineResult);
+	});
+	it('Multiple cursors on a single line', async () => {
+		await setDocumentText('1px 2px');
+		const firstSelection = new Selection(...sel.startOfTheDocument);
+		const secondSelection = new Selection(0, 4, 0, 4);
+		editor.selections = [firstSelection, secondSelection];
+		await inc();
+		const text = await getAllEditorText();
+		expect(text).to.equal('2px 3px');
 	});
 });
