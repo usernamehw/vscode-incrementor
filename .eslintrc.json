@@ -38,7 +38,7 @@
 		"@typescript-eslint/indent": [1, "tab", {
 			"SwitchCase": 1
 		}],
-		"@typescript-eslint/interface-name-prefix": [1, "always"],
+		"@typescript-eslint/interface-name-prefix": [0, "always"],
 		"@typescript-eslint/member-delimiter-style": [1, {
 			"multiline": {
 				"delimiter": "semi",
